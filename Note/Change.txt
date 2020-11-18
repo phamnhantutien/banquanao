@@ -1,6 +1,12 @@
+#Ngày 18/11/2020 Thảo:  Đổi tên các bảng CSDL
+RENAME TABLE `nv4_shop_bill` TO `nv4_banquanao_bill`;
+RENAME TABLE `nv4_shop_product` TO `nv4_banquanao_product`;
+RENAME TABLE `nv4_shop_user` TO `nv4_banquanao_user`;
+
 #Ngày 18/11/2020 Thảo:  Thêm CSDL thiết kế module
 Import các file SQL trong thư mục Note/dbshop để tiếp tục phát triển
 
 #Ngày 12/11/2020 Thảo:  Thêm CSDL thiết kế module
 
 #Ngày 10/11/2020 Thảo:  Thêm CSDL thiết kế module
+Cài đặt mới xem ở đây: https://github.com/khoidang1704/banquanao/wiki/H%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-ph%C3%A1t-tri%E1%BB%83n
