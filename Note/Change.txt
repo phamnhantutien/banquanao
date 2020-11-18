@@ -1,0 +1,6 @@
+#Ngày 18/11/2020 Thảo:  Thêm CSDL thiết kế module
+Import các file SQL trong thư mục Note/dbshop để tiếp tục phát triển
+
+#Ngày 12/11/2020 Thảo:  Thêm CSDL thiết kế module
+
+#Ngày 10/11/2020 Thảo:  Thêm CSDL thiết kế module
