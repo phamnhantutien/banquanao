@@ -13,7 +13,7 @@ if (!defined('NV_MAINFILE')) {
 }
 
 $module_version = [
-    'name' => 'Samples',
+    'name' => 'Banquanao',
     'modfuncs' => 'main,detail,search',
     'change_alias' => 'main,detail,search',
     'submenu' => 'main,detail,search',

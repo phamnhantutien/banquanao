@@ -14,96 +14,70 @@ if (!defined('NV_IS_FILE_ADMIN')) {
 
 $page_title = $lang_module['main'];
 
-$contents .= '<pre><code>';
+$post = $err = [];
+$post['id'] = $nv_Request->get_int('id', "post,get", 0);
+if ($nv_Request->isset_request("submit", "post")) {
+    $post['fullname'] = $nv_Request->get_title('fullname', "post", '');
+    $post['address'] = $nv_Request->get_title('address', "post", '');
+    $post['email'] = $nv_Request->get_title('email', "post", '');
+    $post['phone'] = $nv_Request->get_title('phone', "post", '');
+    if ($post['fullname'] == '') {
+        $err[] = "Chưa nhập họ tên";
+    }
+    if ($post['address'] == '') {
+        $err[] = "Chưa nhập địa chỉ";
+    }
+    if ($post['phone'] == '') {
+        $err[] = "Chưa nhập số điện thoại";
+    } else if (!preg_match("/[0-9]{10,11}/", $post['phone'])) {
+        $err[] = "Số điện thoại chưa đúng quy tắc";
+    }
 
-//------------------------------
-// Viết code xử lý chung vào đây
-//------------------------------
-$image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/nukeviet.png', NV_MAX_WIDTH, NV_MAX_HEIGHT);
+    if ($post['email'] == '') {
+        $err[] = "Chưa nhập email";
+    } else if (!preg_match("/(.*?)@(.*?)/", $post['email'])) {
+        $err[] = "Email chưa đúng quy tắc";
+    }
 
-// Thay đổi kích thước theo tỉ lệ %
-$image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/nukeviet.png', NV_MAX_WIDTH, NV_MAX_HEIGHT);
-$image->resizePercent(100);
-
-$image->save(NV_UPLOADS_REAL_DIR, 'nukeviet.resizePercent.png', 100);
-$image->close();
-$info = $image->create_Image_info;
-$contents .= "// resizePercent\n" . htmlspecialchars(print_r($info, true)) . "\n\n";
-
-// Cắt ảnh từ giữa
-$image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/nukeviet.png', NV_MAX_WIDTH, NV_MAX_HEIGHT);
-$image->cropFromCenter(100, 100);
-
-$image->save(NV_UPLOADS_REAL_DIR, 'nukeviet.cropFromCenter.png', 100);
-$image->close();
-$info = $image->create_Image_info;
-$contents .= "// cropFromCenter\n" . htmlspecialchars(print_r($info, true)) . "\n\n";
-
-// Cắt ảnh từ bên trái
-$image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/nukeviet.png', NV_MAX_WIDTH, NV_MAX_HEIGHT);
-$image->cropFromLeft(50, 50, 200, 200);
-
-$image->save(NV_UPLOADS_REAL_DIR, 'nukeviet.cropFromLeft.png', 100);
-$image->close();
-$info = $image->create_Image_info;
-$contents .= "// cropFromLeft\n" . htmlspecialchars(print_r($info, true)) . "\n\n";
-
-// Cắt ảnh từ bên trên
-$image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/nukeviet.png', NV_MAX_WIDTH, NV_MAX_HEIGHT);
-$image->cropFromTop(200, 200);
-
-$image->save(NV_UPLOADS_REAL_DIR, 'nukeviet.cropFromTop.png', 100);
-$image->close();
-$info = $image->create_Image_info;
-$contents .= "// cropFromTop\n" . htmlspecialchars(print_r($info, true)) . "\n\n";
-
-// Chỉnh kích thước theo hai phương
-$image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/nukeviet.png', NV_MAX_WIDTH, NV_MAX_HEIGHT);
-$image->resizeXY(200, 200);
-
-$image->save(NV_UPLOADS_REAL_DIR, 'nukeviet.resizeXY.png', 100);
-$image->close();
-$info = $image->create_Image_info;
-$contents .= "// resizeXY\n" . htmlspecialchars(print_r($info, true)) . "\n\n";
-
-// Tạo bóng đổ
-$image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/nukeviet.png', NV_MAX_WIDTH, NV_MAX_HEIGHT);
-$image->reflection();
-
-$image->save(NV_UPLOADS_REAL_DIR, 'nukeviet.reflection.png', 100);
-$image->close();
-$info = $image->create_Image_info;
-$contents .= "// reflection\n" . htmlspecialchars(print_r($info, true)) . "\n\n";
-
-// Xoay ảnh
-$image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/nukeviet.png', NV_MAX_WIDTH, NV_MAX_HEIGHT);
-$image->rotate(-45);
-
-$image->save(NV_UPLOADS_REAL_DIR, 'nukeviet.rotate.png', 100);
-$image->close();
-$info = $image->create_Image_info;
-$contents .= "// rotate\n" . htmlspecialchars(print_r($info, true)) . "\n\n";
-
-// Chèn logo vào ảnh
-$image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/nukeviet.png', NV_MAX_WIDTH, NV_MAX_HEIGHT);
-$config = [
-    'w' => 113,
-    'h' => 32,
-    'x' => 30,
-    'y' => 30
-];
-$image->addlogo(NV_ROOTDIR . '/' . NV_ASSETS_DIR . '/images/logo_small.png', 'right', 'bottom', $config);
-
-// Chèn chữ vào ảnh
-$image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/nukeviet.png', NV_MAX_WIDTH, NV_MAX_HEIGHT);
-$image->addstring('NukeViet CMS', 'right', 'bottom', NV_ROOTDIR . '/includes/fonts/Heineken.ttf', 36);
-
-$image->save(NV_UPLOADS_REAL_DIR, 'nukeviet.addstring.png', 100);
-$image->close();
-$info = $image->create_Image_info;
-$contents .= "// addstring\n" . htmlspecialchars(print_r($info, true)) . "\n\n";
-
-$contents .= '</code></pre>';
+    if (empty($err)) {
+        try {
+            if ($post['id'] > 0) {
+                // update
+                $sql = "UPDATE nv4_banquanao_user SET fullname=:fullname, address=:address, email=:email, phone=:phone WHERE id= " . $post['id'];
+                $stmt = $db->prepare($sql);
+            } else {
+                // insert
+                $sql = "INSERT INTO nv4_banquanao_user( fullname, address, email, phone) VALUES (:fullname, :address, :email,:phone)";
+                $stmt = $db->prepare($sql);
+            }
+            $stmt->bindParam("fullname", $post['fullname']);
+            $stmt->bindParam("address", $post['address']);
+            $stmt->bindParam("email", $post['email']);
+            $stmt->bindParam("phone", $post['phone']);
+            $exe = $stmt->execute();
+            if ($exe) {
+                if ($post['id'] > 0) {
+                    $err[] = "Update ok";
+                } else {
+                    $err[] = "insert ok";
+                }
+            } else {
+                $err[] = "Lỗi k thực hiện được";
+            }
+        } catch (PDOException $e) {
+            print_r($e);die;
+        }
+    }
+} else if ($post['id'] > 0) {
+    // tồn tại id thì thực hiện lấy dữ liệu của id đó
+    $sql = "SELECT * FROM nv4_banquanao_user WHERE id = " . $post['id'];
+    $post = $db->query($sql)->fetch();
+} else {
+    $post['fullname'] = '';
+    $post['address'] = '';
+    $post['email'] = '';
+    $post['phone'] = '';
+}
 
 $xtpl = new XTemplate('main.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
 $xtpl->assign('LANG', $lang_module);
@@ -115,9 +89,14 @@ $xtpl->assign('NV_OP_VARIABLE', NV_OP_VARIABLE);
 $xtpl->assign('MODULE_NAME', $module_name);
 $xtpl->assign('OP', $op);
 
-//-------------------------------
-// Viết code xuất ra site vào đây
-//-------------------------------
+$xtpl->assign('POST', $post);
+if (!empty($err)) {
+    $xtpl->assign('ERR', implode("<br/>", $err));
+    $xtpl->parse('main.err');
+}
+
+$xtpl->parse('main');
+$contents = $xtpl->text('main');
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme($contents);
