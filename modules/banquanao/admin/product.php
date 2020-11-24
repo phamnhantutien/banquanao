@@ -19,7 +19,7 @@ $post = $err = [];
 $post['id'] = $nv_Request->get_int('id', "post,get", 0);
 if ($nv_Request->isset_request("submit", "post")) {
     $post['name'] = $nv_Request->get_title('name', "post", '');
-    $post['firm'] = $nv_Request->get_title('firm', "post", '');
+    $post['firm'] = $nv_Request->get_int('firm', "post", 0);
     $post['price'] = $nv_Request->get_int('price', "post", 0);
     $post['status'] = $nv_Request->get_int('status', "post", 0);
     $post['information'] = $nv_Request->get_textarea('information', '', NV_ALLOWED_HTML_TAGS, 1);
@@ -84,7 +84,7 @@ if ($nv_Request->isset_request("submit", "post")) {
     $post = $db->query($sql)->fetch();
 } else {
     $post['name'] = '';
-    $post['firm'] = '';
+    $post['firm'] = 0;
     $post['status'] = 1;
     $post['information'] = '';
 }

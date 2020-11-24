@@ -14,7 +14,7 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN'
 
 define('NV_IS_FILE_ADMIN', true);
 
-$allow_func = ['main', 'list', 'product'];
+$allow_func = ['main', 'list', 'product', 'list_product'];
 
 $arr_status = [];
 $arr_status[1] = "Còn hàng";
