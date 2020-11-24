@@ -12,5 +12,5 @@ if (!defined('NV_ADMIN')) {
     die('Stop!!!');
 }
 
-$submenu['config'] = $lang_module['config'];
 $submenu['list'] = $lang_module['list'];
+$submenu['product'] = $lang_module['product'];
