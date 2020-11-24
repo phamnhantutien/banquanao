@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 24, 2020 lúc 02:28 AM
+-- Thời gian đã tạo: Th10 24, 2020 lúc 02:45 AM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.3.21
 
@@ -36,7 +36,6 @@ CREATE TABLE `nv4_banquanao_product` (
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'tình trạng sản phẩm',
   `image` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'ảnh sản phẩm',
   `information` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'thông tin sản phẩm',
-  `details` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'thông tin chi tiết sản phẩm',
   `active` tinyint(4) NOT NULL DEFAULT 1,
   `weight` int(11) NOT NULL DEFAULT 0,
   `addtime` int(11) NOT NULL DEFAULT 0,
